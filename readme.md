@@ -20,7 +20,8 @@ yarn install
 yarn start
 ```
 
-[A mac release can be downloaded here](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/withings-gpx-1.0.0.dmg)
+## Download installers
+[Mac os v0.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/withings-gpx-1.0.0.dmg)
 
 
 ## License
