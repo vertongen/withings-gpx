@@ -1,0 +1,34 @@
+{
+  "name": "withings-gpx",
+  "version": "1.0.0",
+  "description": "A quick application to export withings activities to GPX",
+  "main": "main.js",
+  "scripts": {
+    "start": "yarn style && electron .",
+    "pack": "yarn style && electron-builder --dir",
+    "dist": "yarn style && electron-builder",
+    "style": "lesshint 'view/less' && lessc view/less/index.less view/style.css"
+  },
+  "build": {
+    "appId": "eu.aaltra.withings.gpx",
+    "mac": {
+      "category": "your.app.category.type"
+    }
+  },
+  "keywords": [
+    "Withings",
+    "gpx"
+  ],
+  "author": "Pieter-Paulus Vertongen",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^6.0.2",
+    "electron-builder": "^21.2.0"
+  },
+  "dependencies": {
+    "autolesshint": "^0.2.2",
+    "dateformat": "^3.0.3",
+    "lessc": "^1.0.2",
+    "lesshint": "^6.3.7"
+  }
+}

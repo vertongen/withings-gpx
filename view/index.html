@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Withings GPX export</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div id="login" class="login">
+      <h2>Withings login</h2>
+      <form>
+          <input id="email" type="email" class="userinput" placeholder="username">
+          <input id="password" type="password" class="userinput" placeholder="password">
+          <input type="button" title="Login" value="Login" id="loginButton" class="btn">
+      </form>
+    </div>
+    <div id="activitiesDialog">
+      <h2>Please choose the activity you want to convert to GPX</h2>
+        <div id="activities" class="activities">
+        </div>
+    </div>
+    <div id="processing" class="dialog">
+      <h2>Downloading data and converting to GPX</h2>
+    </div>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
