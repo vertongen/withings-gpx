@@ -21,7 +21,8 @@ yarn start
 ```
 
 ## Download installers
-[Mac os v0.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/withings-gpx-1.0.0.dmg)
+[macOS v0.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/Withings.gpx.export-0.1.0.dmg)
+[Windows v0.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/Withings.gpx.export.Setup.0.1.0.exe)
 
 
 ## License
