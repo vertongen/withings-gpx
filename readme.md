@@ -10,9 +10,9 @@ This project is meant to export cycling or walking activities from Withings to G
 
 ## Download installers
 
-[macOS v0.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/Withings.gpx.export-0.1.0.dmg) 
+[macOS v0.1.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1.1-alpha/Withings.gpx.export-0.1.1.dmg) 
 
-[Windows v0.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1-alpha/Withings.gpx.export.Setup.0.1.0.exe)
+[Windows 64bit & 32bit v0.1.1 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1.1-alpha/Withings.gpx.export.Setup.0.1.1.exe)
 
 ## To Use
 
