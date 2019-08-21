@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -18,11 +18,33 @@ function createWindow () {
     }
   })
 
+  var menu = Menu.buildFromTemplate([
+    {
+        label: 'Withings GPX',
+        submenu: [
+            {
+              label:'Logout ...',
+              click() { 
+                mainWindow.webContents.send('logout');
+              }
+            },
+            {type:'separator'},
+            {
+              label:'Exit', 
+              click() { 
+                  app.quit() 
+              } 
+          }
+        ]
+    }
+  ])
+  Menu.setApplicationMenu(menu); 
+
   // and load the index.html of the app.
   mainWindow.loadFile('view/index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

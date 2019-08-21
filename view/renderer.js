@@ -4,32 +4,56 @@ const Activity = require('../src/withings/activity.js')
 const GpxGenerator = require('../src/gpxgenerator.js')
 const dateFormat = require('dateformat');
 const fs = require('fs')
+require('electron').ipcRenderer.on('logout', logout);
 
 let login = new Login()
 let account = new Account()
 let activity = new Activity();
 
+let SERVICE_NAME = 'Withings-GPX'
+
 document.getElementById('loginButton').addEventListener('click', function(){
   startLogin()
+})
+
+function hideAllPanels() {
   document.getElementById('login').hidden = true;
-})  
+  document.getElementById('activitiesDialog').hidden = true;
+  document.getElementById('processing').hidden = true;
+}
+
+async function startAutoLogin() {
+  hideAllPanels();
+  var autoLoginResult = await login.tryAutoLogin();
+  if(autoLoginResult) {
+    await getActivities(autoLoginResult);
+  }else {
+    document.getElementById('login').hidden = false;
+  }
+}
+
+async function logout() {
+  await login.deleteCredentials();
+  hideAllPanels();
+  document.getElementById('login').hidden = false;
+}
 
 /**
  * fetches the login and password from the UI,
  * if the login is successful, it will get the activities
  */
 async function startLogin(){
-    login.email = document.getElementById('email').value;
-    login.password = document.getElementById('password').value;
-    var loginResult = {}
-    try{
-        loginResult = await login.authenticate();
-    }catch(e){
-        document.getElementById('login').hidden = false;
-        document.getElementById('activitiesDialog').hidden = true;
-        return;
-    }
-    await getActivities(loginResult);
+  hideAllPanels();
+  login.email = document.getElementById('email').value;
+  login.password = document.getElementById('password').value;
+  var loginResult = {}
+  try{
+      loginResult = await login.authenticate(true);
+  }catch(e){
+      document.getElementById('login').hidden = false;
+      return;
+  }
+  await getActivities(loginResult);
 }
 
 /**
@@ -60,9 +84,9 @@ function renderActivities(allActivities){
     newDiv.addEventListener('click', function(){
       var selectedActivity = allActivities
                               .filter(a => a.id === Number(newDiv.dataset.activityId))[0];
-      generateGpx(selectedActivity);  
+      generateGpx(selectedActivity);
+      hideAllPanels();
       document.getElementById('processing').hidden = false;
-      document.getElementById('activitiesDialog').hidden = true;
     })
 
     activityDiv.appendChild(newDiv)
@@ -124,8 +148,9 @@ async function generateGpx(selectedActivity){
           alert('failed to save the file: ' + e);
       }
       }
+      hideAllPanels();
       document.getElementById('activitiesDialog').hidden = false;
-      document.getElementById('processing').hidden = true;
-      document.getElementById('login').hidden = true;
   });
 }
+
+startAutoLogin();
