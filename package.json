@@ -1,14 +1,13 @@
 {
   "name": "withings-gpx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A quick application to export withings activities to GPX",
   "main": "main.js",
   "scripts": {
     "start": "yarn style && electron .",
     "pack": "yarn style && electron-builder --dir",
     "dist": "yarn style && electron-builder --mac --win --x64 --ia32 -p always",
-    "style": "lesshint 'view/less' && lessc view/less/index.less view/style.css",
-    "rebuild": "electron-rebuild -f -w keytar"
+    "style": "lesshint 'view/less' && lessc view/less/index.less view/style.css"
   },
   "build": {
     "productName": "Withings gpx export",
@@ -32,6 +31,7 @@
       "icon": "build/icon.ico"
     }
   },
+  "postinstall": "electron-builder install-app-deps",
   "keywords": [
     "Withings",
     "gpx"
@@ -45,8 +45,7 @@
   "dependencies": {
     "autolesshint": "^0.2.2",
     "dateformat": "^3.0.3",
-    "electron-rebuild": "^1.8.6",
-    "keytar": "^5.0.0-beta.0",
+    "keytar": "^4.13.0",
     "lessc": "^1.0.2",
     "lesshint": "^6.3.7"
   }
