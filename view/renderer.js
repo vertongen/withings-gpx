@@ -4,24 +4,46 @@ const Activity = require('../src/withings/activity.js')
 const GpxGenerator = require('../src/gpxgenerator.js')
 const dateFormat = require('dateformat');
 const fs = require('fs')
-require('electron').ipcRenderer.on('logout', logout);
+
 
 let login = new Login()
 let account = new Account()
-let activity = new Activity();
+let activity = new Activity()
 
-let SERVICE_NAME = 'Withings-GPX'
+let SERVICE_NAME = 'Withings-GPX';
+let loginButton = document.getElementById('loginButton');
+let emailInputField = document.getElementById('email');
+let passwordInputField = document.getElementById('password');
 
-document.getElementById('loginButton').addEventListener('click', function(){
-  startLogin()
-})
+// event handlers
+require('electron').ipcRenderer.on('logout', logout)
+loginButton.addEventListener('click', startLogin);
+emailInputField.addEventListener('keypress', checkKeyAndLogin);
+passwordInputField.addEventListener('keypress', checkKeyAndLogin);
 
+// functions
+/**
+ * checks if the keycode is enter, if so it starts the login function
+ * @param {Event} e 
+ */
+function checkKeyAndLogin(e) {
+  if (e.keyCode == 13) {
+    startLogin();  
+  }
+}
+
+/**
+ * hides all panels
+ */
 function hideAllPanels() {
   document.getElementById('login').hidden = true;
   document.getElementById('activitiesDialog').hidden = true;
   document.getElementById('processing').hidden = true;
 }
 
+/**
+ * checks if the login can automatically sign in with the keychain credentials
+ */
 async function startAutoLogin() {
   hideAllPanels();
   var autoLoginResult = await login.tryAutoLogin();
@@ -32,8 +54,14 @@ async function startAutoLogin() {
   }
 }
 
+/**
+ * deletes the credentials from the keychain and returns to the login screen
+ */
 async function logout() {
   await login.deleteCredentials();
+  emailInputField.value = '';
+  passwordInputField.value = '';
+
   hideAllPanels();
   document.getElementById('login').hidden = false;
 }
