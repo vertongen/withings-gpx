@@ -7,7 +7,8 @@
     "start": "yarn style && electron .",
     "pack": "yarn style && electron-builder --dir",
     "dist": "yarn style && electron-builder --mac --win --x64 --ia32 -p always",
-    "style": "lesshint 'view/less' && lessc view/less/index.less view/style.css"
+    "style": "lesshint 'view/less' && lessc view/less/index.less view/style.css",
+    "rebuild": "electron-rebuild keytar"
   },
   "build": {
     "productName": "Withings gpx export",
@@ -40,7 +41,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^6.0.2",
-    "electron-builder": "^21.2.0"
+    "electron-builder": "^21.2.0",
+    "electron-rebuild": "^1.8.6"
   },
   "dependencies": {
     "autolesshint": "^0.2.2",
