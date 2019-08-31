@@ -171,7 +171,7 @@ async function getNextBatchOfActivities(autoLoadIteration){
  */
 function renderActivities(allActivities){
   let activityDiv = document.getElementById('activities')
-  /*
+  
   allActivities.forEach(function(activity){
     var newDiv = renderActivityDiv(activity);
     newDiv.addEventListener('click', function(){
@@ -183,7 +183,7 @@ function renderActivities(allActivities){
     })
 
     activityDiv.appendChild(newDiv)
-  });*/
+  });
 
   checkScrollPositionAndPreloadIfNecessary();
 }
