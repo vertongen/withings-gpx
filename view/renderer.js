@@ -9,6 +9,9 @@ const fs = require('fs')
 let login = new Login()
 let account = new Account()
 let activity = new Activity()
+let accountResult = {}
+let loginResult = {}
+let allActivities = []
 
 let SERVICE_NAME = 'Withings-GPX';
 let loginButton = document.getElementById('loginButton');
@@ -20,6 +23,33 @@ require('electron').ipcRenderer.on('logout', logout)
 loginButton.addEventListener('click', startLogin);
 emailInputField.addEventListener('keypress', checkKeyAndLogin);
 passwordInputField.addEventListener('keypress', checkKeyAndLogin);
+
+document.addEventListener('scroll', checkScrollPositionAndPreloadIfNecessary);
+
+/**
+ * Checks how far the users scrolled, if there are only 2 full window heights left
+ * to scroll, it will try to preload the next batch of activities
+ */
+function checkScrollPositionAndPreloadIfNecessary() {
+  var scrollY = document.getScroll()[1];
+  var totalHeight = document.body.clientHeight;
+  var windowHeight = require('electron').remote.getCurrentWindow().getBounds().height;
+  if(scrollY > totalHeight - (3 * windowHeight)) {
+    getNextBatchOfActivities();
+  } 
+}
+
+/**
+ * Gets the scroll coordinates for the window in [x,y]
+ */
+document.getScroll = function() {
+    var sx, sy, d = document,
+        r = d.documentElement,
+        b = d.body;
+    sx = r.scrollLeft || b.scrollLeft || 0;
+    sy = r.scrollTop || b.scrollTop || 0;
+    return [sx, sy];
+}
 
 // functions
 /**
@@ -74,7 +104,6 @@ async function startLogin(){
   hideAllPanels();
   login.email = document.getElementById('email').value;
   login.password = document.getElementById('password').value;
-  var loginResult = {}
   try{
       loginResult = await login.authenticate(true);
   }catch(e){
@@ -85,20 +114,55 @@ async function startLogin(){
 }
 
 /**
- * Gets the account info and all activities from the past 30 days
+ * Gets the account info and starts to get the first page of activities
  * @param {LoginResult} loginResult the result of the login 
  * authenticate method
  */
 async function getActivities(loginResult){
   account.setAccountAndSessionByLoginResult(loginResult)
-  let accountResult = await account.getUserId()
+  accountResult = await account.getUserId()
 
   activity.setUserIdAndSessionId(accountResult.userId, loginResult.sessionId);
-  let allActivities = await activity.getAllActivitiesInLast30Days();
+  getNextBatchOfActivities();
+}
 
+/**
+ * Gets the next page of activities, adds them to the full list and renders the new ones
+ * @param {int} autoLoadIteration number of times it has been trying to recursively load the next page
+ */
+async function getNextBatchOfActivities(autoLoadIteration){
+  document.getElementById('loading').hidden = false;
 
+  //todo: define the maximum range by date pickers, now it is set to 2015
+  newActivityResponse = await activity.getNextPageWithActivities(new Date(), new Date(2015,0));
+
+  var newActivities = newActivityResponse.activities;
+
+  //If the response comes out empty, try to load the next batch
+  if(newActivities.length === 0 && !newActivityResponse.loading && !newActivityResponse.finished){
+    var iteration = 1
+    if (autoLoadIteration){
+      iteration = autoLoadIteration + 1;
+    }
+    getNextBatchOfActivities(iteration);
+    return;
+  }
+
+  allActivities.push.apply(allActivities, newActivities);
   document.getElementById('activitiesDialog').hidden = false;
-  renderActivities(allActivities);
+
+  //Show and hide the loading or finished state
+  if(newActivityResponse.loading || newActivityResponse.finished) {
+    document.getElementById('loading').hidden = !newActivityResponse.loading;
+    document.getElementById('finished').hidden = !newActivityResponse.finished;
+    return;
+  } else {
+    document.getElementById('loading').hidden = true;
+    document.getElementById('finished').hidden = true;
+  }
+
+  //Render the new activities, if any
+  renderActivities(newActivities);
 }
 
 /**
@@ -107,6 +171,7 @@ async function getActivities(loginResult){
  */
 function renderActivities(allActivities){
   let activityDiv = document.getElementById('activities')
+  /*
   allActivities.forEach(function(activity){
     var newDiv = renderActivityDiv(activity);
     newDiv.addEventListener('click', function(){
@@ -118,7 +183,9 @@ function renderActivities(allActivities){
     })
 
     activityDiv.appendChild(newDiv)
-  });
+  });*/
+
+  checkScrollPositionAndPreloadIfNecessary();
 }
 
 /**
@@ -164,6 +231,7 @@ async function generateGpx(selectedActivity){
   var fileName = 'activity_' 
                 + dateFormat(startDate, 'ddmmyyyy_HHMM') 
                 + '.gpx'
+
   const { dialog, app }  = require('electron').remote
   const options = {
       defaultPath: app.getPath('documents') + '/' + fileName,

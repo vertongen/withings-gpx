@@ -36,11 +36,55 @@ class Activity {
     }
 
     /**
+     * Gets the next page of activities, 
+     * startDate and endDate should always be the same when requesting data
+     * The class keeps track of the pages itself. 
+     * @param {Date} startDate 
+     * @param {Date} endDate 
+     * @return {Object} with properties loading, finished & activities
+     */
+    async getNextPageWithActivities(startDate, endDate){
+        if(this.isLoading === true){
+            return {
+                loading: true,
+                finished: false,
+                activities: []
+            }
+        }
+        
+        if (this.currentStartDate){
+            this.currentStartDate.setDate(this.currentStartDate.getDate()-30);
+        } else {
+            this.currentStartDate = startDate;
+        }
+
+        if (this.currentStartDate < endDate) {
+            return {
+                loading: false,
+                finished: true,
+                activities: []
+            }
+        }
+        let startDateMin30Days = new Date(this.currentStartDate.getTime());
+        startDateMin30Days.setDate(this.currentStartDate.getDate()-30);
+        if(startDateMin30Days < endDate) {
+            startDateMin30Days = endDate;
+        }
+        let activities = await this.getAllActivities(startDateMin30Days, this.currentStartDate)
+        return {
+            loading: false,
+            finished: false,
+            activities: activities
+        };
+    }
+
+    /**
      * Fetches all activities between startdate and enddate
      * @param {Date} startDate start date to filter on
      * @param {Date} endDate end date to filter on
      */
     async getAllActivities(startDate, endDate){
+        this.isLoading = true;
         var requestBody = {
             'action':'getbyuserid',
             'userid': this.userId,
@@ -52,6 +96,7 @@ class Activity {
             'appliver':4050301,
             'sessionid':this.sessionId
         };
+        let that = this;
         let promise = new Promise(function(resolve, reject){
             new Api().post('/cgi-bin/v2/activity', requestBody).then(
                 function(body){
@@ -64,6 +109,7 @@ class Activity {
                                     .filter(a => a.gps !== null)
                                     .sort((a,b) => b.startdate - a.startdate);
                     resolve(activitiesToSelectfrom)
+                    that.isLoading = false;
                 }, 
                 function(error){
                     return reject(new Error('Server error'));
