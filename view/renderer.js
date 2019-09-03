@@ -234,7 +234,9 @@ async function generateGpx(selectedActivity){
 
   const { dialog, app }  = require('electron').remote
 
-  const lastSaveDir = await Preferences.getLastSaveDir();
+  const preferences = new Preferences()
+
+  const lastSaveDir = await preferences.getLastSaveDir();
 
   const options = {
       defaultPath: (lastSaveDir ? lastSaveDir : app.getPath('documents')) + '/' + fileName,
@@ -246,7 +248,7 @@ async function generateGpx(selectedActivity){
       try{
           fs.writeFileSync(filePath, gpxContent, 'utf-8');
 
-          await Preferences.updateLastSaveDir(filePath);
+          await preferences.updateLastSaveDir(filePath);
       }catch(e){
           alert('failed to save the file: ' + e);
       }
