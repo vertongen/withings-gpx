@@ -1,6 +1,6 @@
 {
   "name": "withings-gpx",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A quick application to export withings activities to GPX",
   "main": "main.js",
   "scripts": {
