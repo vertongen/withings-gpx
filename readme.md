@@ -30,7 +30,7 @@ yarn start
 ```
 ## Troubleshooting
 
-`Uncaught error: Module did not self-register`
+1. `Uncaught error: Module did not self-register`
 
 This is caused by the keytar module, run the command 
 
@@ -39,7 +39,7 @@ This is caused by the keytar module, run the command
 to build the keytar module on your platform.
 
 
-`no suitable image found`
+2. `no suitable image found`
 
 This is also caused by the keytar module after a dist has been made. 
 
