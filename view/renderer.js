@@ -196,10 +196,18 @@ function renderActivities(allActivities){
 function renderActivityDiv(activity) {
   var newDiv = document.createElement('div');
   let startDate = new Date(activity.startdate * 1000);
-  newDiv.innerHTML = '<h3>Activity started on ' 
+  let icon = '<div class="icon download"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 48 39.5"><g><path class="icon-white" d="M39.1,12a15.5,15.5,0,0,0-28.1-5,12,12,0,0,0,1,24,2,2,0,0,0,0-4,8,8,0,0,1,0-16h.24l.22,0,.17,0,.2-.06.17-.07.18-.1.15-.09a1.07,1.07,0,0,0,.16-.14l.13-.12a.79.79,0,0,0,.12-.15.88.88,0,0,0,.12-.17l.05-.07A11.51,11.51,0,0,1,35.44,14.3v.06a.24.24,0,0,0,0,.08c0,.1,0,.2.07.3l0,.06a2,2,0,0,0,.14.3l0,0a2,2,0,0,0,1.7,1h.21l.1,0A5.17,5.17,0,0,1,38.5,16a5.5,5.5,0,0,1,0,11H37a2,2,0,0,0,0,4h1.5a9.49,9.49,0,0,0,.6-19Z"/><path class="icon-white" d="M29.68,31l-3.39,3.39V20a1.5,1.5,0,0,0-3,0V34.38L19.91,31a1.5,1.5,0,0,0-2.12,2.13l5.94,5.94h0a1.38,1.38,0,0,0,.47.31l0,0a1.62,1.62,0,0,0,.54.1h0a1.47,1.47,0,0,0,.56-.11h0a1.5,1.5,0,0,0,.51-.35l5.93-5.93A1.5,1.5,0,1,0,29.68,31Z"/></g></svg></div>';
+
+  if(activity.isAlreadyDownloaded) {
+    icon = '<div class="icon check"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 47.83 30.92"><path class="icon-white" d="M18.92,30.92a2,2,0,0,1-1.42-.59L.59,13.41a2,2,0,0,1,0-2.82,2,2,0,0,1,2.82,0l15.51,15.5L44.42.59a2,2,0,0,1,2.83,2.82L20.33,30.33A2,2,0,0,1,18.92,30.92Z"/></svg></div>';
+  }
+  
+  newDiv.innerHTML = '<h3>'
+                      + icon
+                      + 'Activity started on ' 
                       + dateFormat(startDate, 'dd mm yyyy') 
                       + ' at ' 
-                      + dateFormat(startDate, 'HH:MM') + ' <h3>';
+                      + dateFormat(startDate, 'HH:MM') + ' </h3>';
   newDiv.innerHTML += '<div class="info maxheartrate"><div class="label">'
                       + 'average HR</div><div class="value">' 
                       + activity.data.hr_average 
@@ -216,6 +224,7 @@ function renderActivityDiv(activity) {
                       + 'calories</div><div class="value">' 
                       + Math.round(activity.data.manual_calories) 
                       + '<span>kcal</span></div></div>';
+  
   newDiv.dataset.activityId = activity.id;
   return newDiv;
 }

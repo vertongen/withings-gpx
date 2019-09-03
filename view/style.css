@@ -5,16 +5,22 @@ html {
   box-sizing: inherit;
 }
 body {
-  background-color: #202428;
+  background-color: #202330;
   font-family: helvetica, arial, sans;
   font-weight: 200;
+}
+.icon {
+  display: inline-block;
+}
+.icon-white {
+  fill: #dfe0e2;
 }
 .login {
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
-  background: #0f0f0f;
+  background: #2e3243;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   left: 50%;
   max-width: 475px;
@@ -29,7 +35,7 @@ body {
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
-  background: #0f0f0f;
+  background: #2e3243;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   left: 50%;
   max-width: 475px;
@@ -40,8 +46,16 @@ body {
   transform: translate(-50%, -50%);
   width: 40%;
 }
+.dialog.processing {
+  width: auto;
+  display: flex;
+  align-items: center;
+}
+.dialog.processing[hidden] {
+  display: none;
+}
 h2 {
-  color: #ffffff;
+  color: #dfe0e2;
   display: block;
   font-family: 'helvetica';
   font-size: 1.35em;
@@ -50,7 +64,7 @@ h2 {
   padding: 0.75em 1em 0.75em 1.5em;
 }
 h3 {
-  color: #ffffff;
+  color: #dfe0e2;
   display: block;
   font-family: 'helvetica';
   font-size: 1.2em;
@@ -64,24 +78,27 @@ form {
   width: 100%;
 }
 .login > h2 {
-  background: #0f0f0f;
+  background: #2e3243;
   width: 100%;
 }
 .dialog > h2 {
-  background: #0f0f0f;
+  background: #2e3243;
   width: 100%;
 }
 input {
-  background: #0f0f0f;
+  background: #2e3243;
   border: 0px;
-  border-bottom: 1px solid #606060;
-  color: #e6e6e6;
+  border-bottom: 1px solid #8c8fa3;
+  color: #dfe0e2;
   display: block;
   margin: auto auto;
   margin-bottom: 2em;
   padding: 0.5em 0em;
   padding-bottom: 1.25em;
   width: 100%;
+}
+input::placeholder {
+  color: #8c8fa3;
 }
 input:focus {
   outline: none;
@@ -106,22 +123,26 @@ input:focus {
   outline: none;
 }
 .activities > div {
-  background-color: #0f0f0f;
+  background-color: #2e3243;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-  color: #e6e6e6;
+  color: #dfe0e2;
   cursor: pointer;
   font-size: 0.8em;
   margin: 10px;
   padding: 20px;
 }
+.activities > div .icon {
+  margin-right: 10px;
+  vertical-align: middle;
+}
 .activities > div:hover {
-  background-color: #434c54;
+  background-color: #3b3e51;
 }
 .loading,
 .finished {
-  background-color: #0f0f0f;
+  background-color: #2e3243;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-  color: #e6e6e6;
+  color: #dfe0e2;
   font-size: 1em;
   margin: 10px;
   padding: 20px;
@@ -131,10 +152,10 @@ input:focus {
   width: 120px;
 }
 .info .label {
-  color: #808080;
+  color: #8c8fa3;
   margin-bottom: 5px;
 }
 .info .value span {
-  color: #808080;
+  color: #8c8fa3;
   padding-left: 5px;
 }

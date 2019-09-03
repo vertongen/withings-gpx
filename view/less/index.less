@@ -1,10 +1,10 @@
-@background-color: #202428;
-@dialog-color: #0f0f0f;
-@activities-hover-color: #434c54;
-@input-bottom-border: #606060;
-@title-color: #ffffff;
-@text-color: #e6e6e6;
-@subtext-color: #808080;
+@background-color: #202330;
+@dialog-color: #2e3243;
+@activities-hover-color: #3b3e51;
+@input-bottom-border: #8c8fa3;
+@title-color: #dfe0e2;
+@text-color: #dfe0e2;
+@subtext-color: #8c8fa3;
 @btn-background-color: #008cff;
 @btn-secondary-color: #027fe8;
 @btn-hover-color: #2e92e4;
@@ -25,6 +25,13 @@ body {
     font-weight: 200;
 }
 
+.icon {
+    display: inline-block;
+}
+.icon-white {
+    fill: @text-color;
+}
+
 .login {
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -40,7 +47,6 @@ body {
     transform: translate(-50%, -50%);
     width: 40%;
 }
-
 .dialog {
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -56,6 +62,15 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
+
+    &.processing {
+        width: auto;
+        display: flex;
+        align-items: center;
+        &[hidden] {
+            display: none;
+        }
+    }
 }
 
 h2 {
@@ -105,7 +120,9 @@ input {
     padding: 0.5em 0em;
     padding-bottom: 1.25em;
     width: 100%;
-
+    &::placeholder {
+        color: @input-bottom-border;
+    }
     &:focus {
         outline: none;
     }
@@ -143,6 +160,11 @@ input {
         font-size: 0.8em;
         margin: 10px;
         padding: 20px;
+
+        .icon {
+            margin-right: 10px;
+            vertical-align: middle;
+        }
 
         &:hover {
             background-color: @activities-hover-color;
