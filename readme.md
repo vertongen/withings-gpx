@@ -31,8 +31,21 @@ yarn start
 ## Troubleshooting
 
 `Uncaught error: Module did not self-register`
-This is caused by the keytar module, run the command `yarn rebuild` to build the keytar module on your platform.
 
+This is caused by the keytar module, run the command 
+
+`yarn rebuild` 
+
+to build the keytar module on your platform.
+
+
+`no suitable image found`
+
+This is also caused by the keytar module after a dist has been made. 
+
+- Remove the node_modules folder
+- Execute `yarn install`
+- Execute `yarn rebuild`
 
 ## License
 
