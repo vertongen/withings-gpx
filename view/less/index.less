@@ -1,8 +1,14 @@
 @background-color: #202428;
 @dialog-color: #0f0f0f;
+@activities-hover-color: #434c54;
+@input-bottom-border: #606060;
 @title-color: #ffffff;
 @text-color: #e6e6e6;
 @subtext-color: #808080;
+@btn-background-color: #008cff;
+@btn-secondary-color: #027fe8;
+@btn-hover-color: #2e92e4;
+@btn-text-color: #ffffff;
 
 html {
     box-sizing: border-box;
@@ -91,7 +97,7 @@ form {
 input {
     background: @dialog-color;
     border: 0px;
-    border-bottom: 1px solid #606060;
+    border-bottom: 1px solid @input-bottom-border;
     color: @text-color;
     display: block;
     margin: auto auto;
@@ -106,21 +112,21 @@ input {
 }
 
 .btn {
-    background: #008cff;
-    border: 1px solid #027fe8;
+    background: @btn-background-color;
+    border: 1px solid @btn-secondary-color;
     border-radius: 4px;
-    color: white;
+    color: @btn-text-color;
     display: inline-block;
     padding: 0.5em 2em;
     text-transform: uppercase;
     width: auto;
 
     &:hover {
-        background: #2e92e4;
+        background: @btn-hover-color;
     }
 
     &:active {
-        background: #027fe8;
+        background: @btn-secondary-color;
     }
 
     &:focus {
@@ -139,7 +145,7 @@ input {
         padding: 20px;
 
         &:hover {
-            background-color: #434c54;
+            background-color: @activities-hover-color;
         }
     }
 }
