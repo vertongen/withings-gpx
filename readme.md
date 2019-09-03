@@ -10,9 +10,9 @@ This project is meant to export cycling or walking activities from Withings to G
 
 ## Download installers
 
-[macOS v0.1.4 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1.4-alpha/Withings.gpx.export-0.1.4.dmg) 
+[macOS v0.1.5 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1.5-alpha/Withings.gpx.export-0.1.5.dmg) 
 
-[Windows 64bit & 32bit v0.1.4 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1.4-alpha/Withings.gpx.export.Setup.0.1.4.exe)
+[Windows 64bit & 32bit v0.1.5 alpha](https://github.com/vertongen/withings-gpx/releases/download/v0.1.5-alpha/Withings.gpx.export.Setup.0.1.5.exe)
 
 ## To Use
 
@@ -28,6 +28,11 @@ yarn install
 # Run the app
 yarn start
 ```
+## Troubleshooting
+
+`Uncaught error: Module did not self-register`
+This is caused by the keytar module, run the command `yarn rebuild` to build the keytar module on your platform.
+
 
 ## License
 
