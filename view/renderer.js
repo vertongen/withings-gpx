@@ -4,7 +4,7 @@ const Activity = require('../src/withings/activity.js')
 const GpxGenerator = require('../src/gpxgenerator.js')
 const dateFormat = require('dateformat');
 const fs = require('fs')
-
+const Preferences = require('../src/preferences')
 
 let login = new Login()
 let account = new Account()
@@ -233,20 +233,28 @@ async function generateGpx(selectedActivity){
                 + '.gpx'
 
   const { dialog, app }  = require('electron').remote
+
+  const preferences = new Preferences()
+
+  const lastSaveDir = await preferences.getLastSaveDir();
+
   const options = {
-      defaultPath: app.getPath('documents') + '/' + fileName,
+      defaultPath: (lastSaveDir ? lastSaveDir : app.getPath('documents')) + '/' + fileName,
   }
-  dialog.showSaveDialog(null, options, (path) => {
-      if(path){
+
+  const { filePath } = await dialog.showSaveDialog(null, options);
+
+  if( filePath ){
       try{
-          fs.writeFileSync(path, gpxContent, 'utf-8');
+          fs.writeFileSync(filePath, gpxContent, 'utf-8');
+
+          await preferences.updateLastSaveDir(filePath);
       }catch(e){
           alert('failed to save the file: ' + e);
       }
-      }
-      hideAllPanels();
-      document.getElementById('activitiesDialog').hidden = false;
-  });
+  }
+  hideAllPanels();
+  document.getElementById('activitiesDialog').hidden = false;
 }
 
 startAutoLogin();

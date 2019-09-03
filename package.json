@@ -47,6 +47,7 @@
   "dependencies": {
     "autolesshint": "^0.2.2",
     "dateformat": "^3.0.3",
+    "electron-json-storage": "^4.1.7",
     "keytar": "^4.13.0",
     "lessc": "^1.0.2",
     "lesshint": "^6.3.7"
