@@ -2,6 +2,11 @@
 
 This project is meant to export cycling or walking activities from Withings to GPX. The GPX file contains the location and heartrate data which can be imported into other platforms such as [Strava](https://www.strava.com/) The application does not store or send any data to any other platform.
 
+```Update: ```
+With the latest update for the Withings app, you can automatically push your activities to Strava,
+More information here: [https://support.withings.com/hc/en-us/articles/360036851114-Partner-Apps-What-is-Strava-
+](https://support.withings.com/hc/en-us/articles/360036851114-Partner-Apps-What-is-Strava-)
+
 ![](build/Screenshot_2019-08-16_at_23-c4ba1476-6bd2-4ba6-b582-e007e8490967.55.13.png)
 
 ![](build/Screenshot_2019-08-16_at_23-650b7a6a-6b77-4acf-ad8e-3811f81d85e2.55.32.png)
